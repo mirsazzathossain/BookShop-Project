@@ -1,51 +1,258 @@
-{% extends "shop/main.html" %}
+{% extends "shop/base.html" %}
 {% load static %}
+{% load shop_extras %}
 {% block content %}
-    <div class="row">
-		<div class="col-lg-12">
-			<div class="box-element">
+<div class="right-sidebar woocommerce-cart">
+	<div class="site-content bg-punch-light overflow-hidden" id="content">
+		<div class="container">
+			<header class="entry-header space-top-2 space-bottom-1 mb-2">
+				<h1 class="entry-title font-size-7">Your cart: <span id="cart-total">0</span> items</h1>
+			</header>
+			<div class="row pb-8">
+				<div id="primary" class="content-area">
+					<main id="main" class="site-main">
+						<div class="page type-page status-publish hentry">
+							<div class="entry-content">
+								<div class="woocommerce">
+									<form class="woocommerce-cart-form table-responsive" action="/cart/" method="post">
+										{% csrf_token %}
+										<table class=" shop_table shop_table_responsive cart woocommerce-cart-form__contents ">
+											<thead>
+												<tr>
+													<th class="product-name">Product</th>
+													<th class="product-price">Price</th>
+													<th class="product-quantity">Quantity</th>
+													<th class="product-subtotal">Total</th>
+													<th class="product-remove">&nbsp;</th>
+												</tr>
+											</thead>
+											<tbody>
+												{% for item in cart %}
+												<tr class="woocommerce-cart-form__cart-item cart_item">
+													<td class="product-name" data-title="Product">
+														<div class="d-flex align-items-center">
+															<a href="/book/{{item.product.id}}">
+																<img src="{{item.product.imageURL}}" class=" attachment-shop_thumbnail size-shop_thumbnail wp-post-image" width="90" height="138" alt="" />
+															</a>
+															<div class="ml-3 m-w-200-lg-down">
+																<a href="/book/{{item.product.id}}">{{item.product.name}}</a>
+																{% for author in item.product.authors.all %}
+																	<a href="/book/{{item.product.id}}" class="text-gray-700 font-size-2 d-block"
+																	tabindex="0">{{author.name}}</a>
+																{% endfor %}
+																
+															</div>
+														</div>
+													</td>
+													<td class="product-price" data-title="Price">
+														<span class="woocommerce-Price-amount amount"><span
+																class="woocommerce-Price-currencySymbol">$</span>{{item.product.price}}</span>
+													</td>
+													<td class="product-quantity" data-title="Quantity">
+														<div class="quantity d-flex align-items-center">
+															<div class="border px-3 width-120">
+																<div class="js-quantity">
+																	<div class="d-flex align-items-center">
+																		<label
+																			class="screen-reader-text sr-only">Quantity</label>
+																		<a class="js-minus text-dark"
+																			href="javascript:;">
+																			<svg xmlns="http://www.w3.org/2000/svg"
+																				xmlns:xlink="http://www.w3.org/1999/xlink"
+																				width="10px" height="1px">
+																				<path fill-rule="evenodd"
+																					fill="rgb(22, 22, 25)"
+																					d="M-0.000,-0.000 L10.000,-0.000 L10.000,1.000 L-0.000,1.000 L-0.000,-0.000 Z" />
+																			</svg>
+																		</a>
+																		<input type="hidden" name="productId" value="{{item.product.id}}"  />
+																		<input type="number" class=" input-text qty text form-control text-center border-0 item-quantity" step="1" min="1" max="100" name="quantity" value="{{item.quantity}}" data-price={{item.product.price}} title="Qty" />
+																		<a class="js-plus text-dark"
+																			href="javascript:;" data-price={{item.product.price}}>
+																			<svg xmlns="http://www.w3.org/2000/svg"
+																				xmlns:xlink="http://www.w3.org/1999/xlink"
+																				width="10px" height="10px">
+																				<path fill-rule="evenodd"
+																					fill="rgb(22, 22, 25)"
+																					d="M10.000,5.000 L6.000,5.000 L6.000,10.000 L5.000,10.000 L5.000,5.000 L-0.000,5.000 L-0.000,4.000 L5.000,4.000 L5.000,-0.000 L6.000,-0.000 L6.000,4.000 L10.000,4.000 L10.000,5.000 Z" />
+																			</svg>
+																		</a>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</td>
+													<td class="product-subtotal total" data-title="Total">
+														<span class="woocommerce-Price-amount amount bill-amount">${{ item.quantity | multiply:item.product.price|floatformat:2  }}</span>
+													</td>
+													<td class="product-remove">
+														<a href="#" class="remove remove-from-cart" data-book={{item.product.id}} data-quantity={{item.quantity}} aria-label="Remove this item">
+															<svg xmlns="http://www.w3.org/2000/svg"
+																xmlns:xlink="http://www.w3.org/1999/xlink" width="15px"
+																height="15px">
+																<path fill-rule="evenodd" fill="rgb(22, 22, 25)"
+																	d="M15.011,13.899 L13.899,15.012 L7.500,8.613 L1.101,15.012 L-0.012,13.899 L6.387,7.500 L-0.012,1.101 L1.101,-0.012 L7.500,6.387 L13.899,-0.012 L15.011,1.101 L8.613,7.500 L15.011,13.899 Z" />
+															</svg>
+														</a>
+													</td>
+												</tr>
+												{% endfor %}
+												<tr>
+													<td colspan="5" class="actions">
 
-				<a  class="btn btn-outline-dark" href="{% url 'store' %}">&#x2190; Continue Shopping</a>
-
-				<br>
-				<br>
-				<table class="table">
-					<tr>
-						<th><h5>Items: <strong>3</strong></h5></th>
-						<th><h5>Total:<strong> $42</strong></h5></th>
-						<th>
-							<a  style="float:right; margin:5px;" class="btn btn-success" href="{% url 'checkout' %}">Checkout</a>
-						</th>
-					</tr>
-				</table>
-			</div>
-
-			<br>
-			<div class="box-element">
-				<div class="cart-row">
-					<div style="flex:2"></div>
-					<div style="flex:2"><strong>Item</strong></div>
-					<div style="flex:1"><strong>Price</strong></div>
-					<div style="flex:1"><strong>Quantity</strong></div>
-					<div style="flex:1"><strong>Total</strong></div>
+														<input type="submit" class="button" name="update_cart" value="Update cart">
+														<input type="hidden" id="_wpnonce" name="_wpnonce" value="db025d7a70"><input type="hidden" name="_wp_http_referer" value="/storefront/cart/">
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</form>
+								</div>
+							</div>
+						</div>
+					</main>
 				</div>
-				
-				<div class="cart-row">
-					<div style="flex:2"><img class="row-image" src="{% static 'images/placeholder.png' %}"></div>
-					<div style="flex:2"><p>Product 1</p></div>
-					<div style="flex:1"><p>$20</p></div>
-					<div style="flex:1">
-						<p class="quantity">2</p>
-						<div class="quantity">
-							<img class="chg-quantity" src="{% static  'images/arrow-up.png' %}">
-					
-							<img class="chg-quantity" src="{% static  'images/arrow-down.png' %}">
+				<div id="secondary" class="sidebar cart-collaterals order-1" role="complementary">
+					<div id="cartAccordion" class="border border-gray-900 bg-white mb-5">
+						<div class="p-4d875 border">
+							<div id="cartHeadingOne" class="cart-head">
+								<a class="
+                  d-flex
+                  align-items-center
+                  justify-content-between
+                  text-dark
+                " href="#" data-toggle="collapse" data-target="#cartCollapseOne" aria-expanded="true"
+									aria-controls="cartCollapseOne">
+									<h3 class="cart-title mb-0 font-weight-medium font-size-3">
+										Cart Totals
+									</h3>
+									<svg class="mins" xmlns="http://www.w3.org/2000/svg"
+										xmlns:xlink="http://www.w3.org/1999/xlink" width="15px" height="2px">
+										<path fill-rule="evenodd" fill="rgb(22, 22, 25)"
+											d="M0.000,-0.000 L15.000,-0.000 L15.000,2.000 L0.000,2.000 L0.000,-0.000 Z" />
+									</svg>
+									<svg class="plus" xmlns="http://www.w3.org/2000/svg"
+										xmlns:xlink="http://www.w3.org/1999/xlink" width="15px" height="15px">
+										<path fill-rule="evenodd" fill="rgb(22, 22, 25)"
+											d="M15.000,8.000 L9.000,8.000 L9.000,15.000 L7.000,15.000 L7.000,8.000 L0.000,8.000 L0.000,6.000 L7.000,6.000 L7.000,-0.000 L9.000,-0.000 L9.000,6.000 L15.000,6.000 L15.000,8.000 Z" />
+									</svg>
+								</a>
+							</div>
+							<div id="cartCollapseOne" class="mt-4 cart-content collapse show"
+								aria-labelledby="cartHeadingOne" data-parent="#cartAccordion">
+								<table class="shop_table shop_table_responsive">
+									<tbody>
+										<tr class="cart-subtotal">
+											<th>Subtotal</th>
+											<td data-title="Subtotal">
+												<span class="woocommerce-Price-amount amount" id="total-bill">$79.99</span>
+											</td>
+										</tr>
+										<tr class="order-shipping">
+											<th>Shipping</th>
+											<td data-title="Shipping">Free Shipping</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<div class="p-4d875 border">
+							<div id="cartHeadingTwo" class="cart-head">
+								<a class="
+                  d-flex
+                  align-items-center
+                  justify-content-between
+                  text-dark
+                " href="#" data-toggle="collapse" data-target="#cartCollapseTwo" aria-expanded="true"
+									aria-controls="cartCollapseTwo">
+									<h3 class="cart-title mb-0 font-weight-medium font-size-3">
+										Shipping
+									</h3>
+									<svg class="mins" xmlns="http://www.w3.org/2000/svg"
+										xmlns:xlink="http://www.w3.org/1999/xlink" width="15px" height="2px">
+										<path fill-rule="evenodd" fill="rgb(22, 22, 25)"
+											d="M0.000,-0.000 L15.000,-0.000 L15.000,2.000 L0.000,2.000 L0.000,-0.000 Z" />
+									</svg>
+									<svg class="plus" xmlns="http://www.w3.org/2000/svg"
+										xmlns:xlink="http://www.w3.org/1999/xlink" width="15px" height="15px">
+										<path fill-rule="evenodd" fill="rgb(22, 22, 25)"
+											d="M15.000,8.000 L9.000,8.000 L9.000,15.000 L7.000,15.000 L7.000,8.000 L0.000,8.000 L0.000,6.000 L7.000,6.000 L7.000,-0.000 L9.000,-0.000 L9.000,6.000 L15.000,6.000 L15.000,8.000 Z" />
+									</svg>
+								</a>
+							</div>
+							<div id="cartCollapseTwo" class="mt-4 cart-content collapse show"
+								aria-labelledby="cartHeadingTwo" data-parent="#cartAccordion">
+								<ul id="shipping_method">
+									<li>
+										<input checked type="radio" name="shipping_method[0]" data-index="0"
+											id="shipping_method_0_flat_rate1" value="flat_rate:1"
+											class="shipping_method" />
+										<label for="shipping_method_0_flat_rate1">Free shipping</label>
+									</li>
+							</div>
+						</div>
+						<div class="p-4d875 border">
+							<div id="cartHeadingThree" class="cart-head">
+								<a class="
+                  d-flex
+                  align-items-center
+                  justify-content-between
+                  text-dark
+                " href="#" data-toggle="collapse" data-target="#cartCollapseThree" aria-expanded="true"
+									aria-controls="cartCollapseThree">
+									<h3 class="cart-title mb-0 font-weight-medium font-size-3">
+										Coupon
+									</h3>
+									<svg class="mins" xmlns="http://www.w3.org/2000/svg"
+										xmlns:xlink="http://www.w3.org/1999/xlink" width="15px" height="2px">
+										<path fill-rule="evenodd" fill="rgb(22, 22, 25)"
+											d="M0.000,-0.000 L15.000,-0.000 L15.000,2.000 L0.000,2.000 L0.000,-0.000 Z" />
+									</svg>
+									<svg class="plus" xmlns="http://www.w3.org/2000/svg"
+										xmlns:xlink="http://www.w3.org/1999/xlink" width="15px" height="15px">
+										<path fill-rule="evenodd" fill="rgb(22, 22, 25)"
+											d="M15.000,8.000 L9.000,8.000 L9.000,15.000 L7.000,15.000 L7.000,8.000 L0.000,8.000 L0.000,6.000 L7.000,6.000 L7.000,-0.000 L9.000,-0.000 L9.000,6.000 L15.000,6.000 L15.000,8.000 Z" />
+									</svg>
+								</a>
+							</div>
+							<div id="cartCollapseThree" class="mt-4 cart-content collapse show"
+								aria-labelledby="cartHeadingThree" data-parent="#cartAccordion">
+								<div class="coupon">
+									<label for="coupon_code">Coupon:</label>
+									<input disabled type="text" name="coupon_code" class="input-text" id="coupon_code" value=""
+										placeholder="Coupon code" autocomplete="off" />
+									<input disabled type="submit" class="button" name="apply_coupon" value="Apply coupon" />
+								</div>
+							</div>
+						</div>
+						<div class="p-4d875 border">
+							<table class="shop_table shop_table_responsive">
+								<tbody>
+									<tr class="order-total">
+										<th>Total</th>
+										<td data-title="Total">
+											<strong><span class="woocommerce-Price-amount amount" id="total-bill">$97.99</span></strong>
+										</td>
+									</tr>
+								</tbody>
+							</table>
 						</div>
 					</div>
-					<div style="flex:1"><p>$32</p></div>
+					<div class="wc-proceed-to-checkout">
+						<a href="{% url 'checkout' %}" class="
+              checkout-button
+              button
+              alt
+              wc-forward
+              btn btn-dark btn-block
+              rounded-0
+              py-4
+            ">Proceed to checkout</a>
+					</div>
 				</div>
-
 			</div>
 		</div>
 	</div>
+</div>
+
 {% endblock content %}

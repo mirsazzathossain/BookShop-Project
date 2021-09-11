@@ -1,0 +1,354 @@
+{% extends "shop/base.html" %}
+{% load static %}
+{% load shop_extras %}
+{% block content %}
+
+<section class="px-2 px-md-4 bg-punch-light space-bottom-3" style="padding-top: 30px;">
+    <div class="container-fluid bg-white" style="padding-top: 40px; border-radius: 10px;">
+        <ul class="slider-product js-slick-carousel u-slick u-slick--gutters-3 mb-0 space-bottom-2 px-1 px-md-3"
+            data-pagi-classes="text-center u-slick__pagination u-slick__pagination mb-0 mt-3 mt-lg-5"
+            data-slides-show="4" data-responsive='[{
+                   "breakpoint": 1500,
+                   "settings": {
+                     "slidesToShow": 3
+                   }
+                }, {
+                   "breakpoint": 1199,
+                   "settings": {
+                     "slidesToShow": 2
+                   }
+                }, {
+                   "breakpoint": 992,
+                   "settings": {
+                     "slidesToShow": 1
+                   }
+                }]'>
+
+            {% with colors='bg-carolina-light bg-tangerine-light bg-indigo-light bg-chili-light' %}
+            {% for book in books %}
+            {% with next_element=colors.split|next:forloop.counter0 %}
+            <li class="{{next_element}} p-4 p-md-5 rounded-md">
+                <div class="d-md-flex align-items-center">
+                    <div class="mb-4 mb-md-0">
+                        <div class="text-uppercase font-size-1 mb-1 text-truncate">
+                            <a href="/book/{{book.id}}">Paperback</a>
+                        </div>
+                        <h6 class="woocommerce-loop-product__title product__title h-dark font-weight-regular">
+                            <a href="/book/{{book.id}}">{{book.name}}</a>
+                        </h6>
+                        <div class="font-size-2  mb-1 text-truncate">
+                            {% for author in book.authors.all %}
+                            <a href="/book/{{book.id}}" class="text-gray-700">{{author.name}}</a>
+                        </div>
+                        {% endfor %}
+                        <div class="price d-flex align-items-center font-weight-medium font-size-3">
+                            <span class="woocommerce-Price-amount amount"><span
+                                    class="woocommerce-Price-currencySymbol">$</span>41</span>
+                        </div>
+
+                        <div data-book={{ book.id }} data-action="add" data-qty=1
+                            class="update-cart product__hover d-flex align-items-center">
+                            <a href="javascript:;" class="text-uppercase text-dark h-dark font-weight-medium mr-auto">
+                                <span class="product__add-to-cart mr-2">ADD TO CART</span>
+                                <span class="product__add-to-cart-icon font-size-4"><i
+                                        class="flaticon-icon-126515"></i></span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ml-auto">
+                        <a href="/book/{{book.id}}" class="d-block">
+                            <img src="{{book.imageURL}}" class="img-fluid" alt="image-description" width='150'
+                                height='226'>
+                        </a>
+                    </div>
+                </div>
+            </li>
+            {% endwith %}
+            {% endfor %}
+            {% endwith %}
+        </ul>
+    </div>
+</section>
+
+<section class="space-bottom-3 space-top-3">
+    <header class="mb-4 container">
+        <h2 class="font-size-7 text-center">Featured Books</h2>
+    </header>
+    <div class="container">
+        <div class="tab-content">
+            <div class="tab-pane fade show active">
+                <ul
+                    class="products list-unstyled row no-gutters row-cols-2 row-cols-md-3 row-cols-lg-4 row-cols-wd-6 border-top border-left my-0">
+                    {% for book in books %}
+                    <li class="product col">
+                        <div class="product__inner overflow-hidden p-3 p-md-4d875">
+                            <div
+                                class="woocommerce-LoopProduct-link woocommerce-loop-product__link d-block position-relative">
+                                <div class="woocommerce-loop-product__thumbnail">
+                                    <a href="/book/{{book.id}}" class="d-block"><img src="{{book.imageURL}}"
+                                            class="img-fluid d-block mx-auto attachment-shop_catalog size-shop_catalog wp-post-image img-fluid"
+                                            alt="image-description" height="180" width="120"></a>
+                                </div>
+                                <div class="woocommerce-loop-product__body product__body pt-3 bg-white">
+                                    <div class="text-uppercase font-size-1 mb-1 text-truncate"><a
+                                            href="/book/{{book.id}}">Paperback</a>
+                                    </div>
+                                    <h2
+                                        class="woocommerce-loop-product__title product__title h6 text-lh-md mb-1 text-height-2 crop-text-2 h-dark">
+                                        <a href="/book/{{book.id}}">{{book.name}}</a>
+                                    </h2>
+                                    <div class="font-size-2  mb-1 text-truncate">
+                                        {% for author in book.author.all %}
+                                        <a href="/book/{{book.id}}" class="text-gray-700">{{author.name}}</a>
+                                        {% endfor %}
+                                    </div>
+                                    <div class="price d-flex align-items-center font-weight-medium font-size-3">
+                                        <span class="woocommerce-Price-amount amount">${{book.price}}</span>
+                                    </div>
+                                </div>
+                                <div data-book={{ book.id }} data-action="add" data-qty=1
+                                    class="update-cart product__hover d-flex align-items-center">
+                                    <a href="javascript:;" class="text-uppercase text-dark h-dark font-weight-medium mr-auto"
+                                        data-toggle="tooltip" data-placement="right" title="ADD TO CART">
+                                        <span class="product__add-to-cart">ADD TO CART</span>
+                                        <span class="product__add-to-cart-icon font-size-4"><i
+                                                class="flaticon-icon-126515"></i></span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="space-bottom-3">
+    <div class="space-3 bg-gray-200">
+        <div class="container">
+            <header class="d-md-flex justify-content-between align-items-center mb-5">
+                <h2 class="font-size-7 mb-0">Tranding Books</h2>
+                <a href="{% url 'shop' %}" class="d-flex align-items-center text-dark">View All<span
+                        class="flaticon-next font-size-3 ml-2"></span></a>
+            </header>
+            <ul class="js-slick-carousel products list-unstyled u-slick--gutters-3 my-0"
+                data-pagi-classes="d-xl-none text-center u-slick__pagination u-slick__pagination mt-7"
+                data-arrows-classes="d-none d-xl-block u-slick__arrow u-slick__arrow--v1 u-slick__arrow-centered--y rounded-circle box-shadow-1"
+                data-arrow-left-classes="fas flaticon-back u-slick__arrow-inner u-slick__arrow-inner--left ml-lg-n10"
+                data-arrow-right-classes="fas flaticon-next u-slick__arrow-inner u-slick__arrow-inner--right mr-lg-n10"
+                data-slides-show="5" data-responsive='[{
+                           "breakpoint": 1500,
+                           "settings": {
+                             "slidesToShow": 4
+                           }
+                        }, {
+                           "breakpoint": 1199,
+                           "settings": {
+                             "slidesToShow": 3
+                           }
+                        }, {
+                           "breakpoint": 992,
+                           "settings": {
+                             "slidesToShow": 2
+                           }
+                        }]'>
+
+                {% for book in books|slice:":8" %}
+                <li class="product product__space border rounded-md bg-white">
+                    <div class="product__inner overflow-hidden p-3 p-md-4d875">
+                        <div
+                            class="woocommerce-LoopProduct-link woocommerce-loop-product__link d-block position-relative">
+                            <div class="woocommerce-loop-product__thumbnail">
+                                <a href="/book/{{book.id}}" class="d-block"><img src="{{book.imageURL}}"
+                                        class="d-block mx-auto attachment-shop_catalog size-shop_catalog wp-post-image img-fluid"
+                                        alt="image-description" width='150' height='226'></a>
+                            </div>
+                            <div class="woocommerce-loop-product__body product__body pt-3 bg-white">
+                                <div class="text-uppercase font-size-1 mb-1 text-truncate"><a
+                                        href="/book/{{book.id}}">Paperback</a>
+                                </div>
+                                <h2
+                                    class="woocommerce-loop-product__title product__title h6 text-lh-md mb-1 text-height-2 crop-text-2 h-dark">
+                                    <a href="/book/{{book.id}}">{{book.name}}</a>
+                                </h2>
+                                <div class="font-size-2  mb-1 text-truncate">
+                                    {% for author in book.author.all %}
+                                    <a href="/book/{{book.id}}" class="text-gray-700">{{author.name}}</a>
+                                    {% endfor %}
+                                </div>
+                                <div class="price d-flex align-items-center font-weight-medium font-size-3">
+                                    <span class="woocommerce-Price-amount amount">${{book.price}}29</span>
+                                </div>
+                            </div>
+                            <div data-book={{ book.id }} data-action="add" data-qty=1
+                                class="update-cart product__hover d-flex align-items-center">
+                                <a href="javascript:;" class="text-uppercase text-dark h-dark font-weight-medium mr-auto">
+                                    <span class="product__add-to-cart">ADD TO CART</span>
+                                    <span class="product__add-to-cart-icon font-size-4"><i
+                                            class="flaticon-icon-126515"></i></span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</section>
+
+<section class="space-bottom-2 space-bottom-xl-3 product-4-1-4">
+    <div class='container'>
+        <header class="d-md-flex justify-content-between align-items-center mb-4 pb-xl-1">
+            <h2 class="font-size-7 font-weight-medium mb-4 mb-lg-0">New Arrivals</h2>
+        </header>
+        <div class="tab-content">
+            <div class="tab-pane fade show active" id="featured" role="tabpanel" aria-labelledby="featured-tab">
+                <div class="row no-gutters border-top border-left">
+                    <div class="col-lg-4">
+                        <div class="row no-gutters products row-cols-2">
+                            {% for book in books|slice:":4"  %}
+                            <div class="col product">
+                                <div class="product__inner overflow-hidden p-3 p-md-4">
+                                    <div
+                                        class="woocommerce-LoopProduct-link woocommerce-loop-product__link d-block position-relative">
+                                        <div class="woocommerce-loop-product__thumbnail">
+                                            <a href="/book/{{book.id}}"
+                                                class="d-block"><img src="{{book.imageURL}}"
+                                                    class="img-fluid d-block mx-auto attachment-shop_catalog size-shop_catalog wp-post-image"
+                                                    alt="image-description" width="120" height="180"></a>
+                                        </div>
+                                        <div class="woocommerce-loop-product__body product__body pt-3 bg-white">
+                                            <div class="text-uppercase font-size-1 mb-1 text-truncate"><a
+                                                    href="/book/{{book.id}}">Paperback</a>
+                                            </div>
+                                            <h2
+                                                class="woocommerce-loop-product__title product__title h6 text-lh-md mb-1 text-height-2 crop-text-2 h-dark">
+                                                <a
+                                                    href="/book/{{book.id}}">{{book.name}}</a></h2>
+                                            <div class="font-size-2  mb-1 text-truncate">
+                                                {% for author in book.author.all %}
+                                                    <a href="/book/{{book.id}}" class="text-gray-700">{{author.name}}</a>
+                                                {% endfor %}
+                                            </div>
+                                            <div class="price d-flex align-items-center font-weight-medium font-size-3">
+                                                <span class="woocommerce-Price-amount amount">${{book.price}}</span>
+                                            </div>
+                                        </div>
+                                        <div data-book={{ book.id }} data-action="add" data-qty=1
+                                        class="update-cart product__hover d-flex align-items-center">
+                                            <a href="javascript:;"
+                                                class="text-uppercase text-dark h-dark font-weight-medium mr-auto"
+                                                data-toggle="tooltip" data-placement="right"
+                                                data-original-title="ADD TO CART" tabindex="0">
+                                                <span class="product__add-to-cart">ADD TO CART</span>
+                                                <span class="product__add-to-cart-icon font-size-4"><i
+                                                        class="flaticon-icon-126515"></i></span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="col-lg-4 product-1">
+                        <div class="h-100">
+                            {% for book in books|slice:"4:5" %}
+                                <div class="product border-bottom border-right mb-5 mb-lg-0 d-flex h-100">
+                                    <div class="product__inner overflow-hidden p-3 p-md-4 my-auto">
+                                        <div class="woocommerce-LoopProduct-link woocommerce-loop-product__link d-block position-relative">
+                                            <div class="woocommerce-loop-product__thumbnail mb-5 mb-lg-8">
+                                                <a href="/book/{{book.id}}" class="d-block ">
+                                                    <img src="{{book.imageURL}}" class="img-fluid height-400 d-block mx-auto mx-lg-0 px-xl-7 attachment-shop_catalog size-shop_catalog wp-post-image" alt="image-description">
+                                                </a>
+                                            </div>
+                                            <div class="woocommerce-loop-product__body product__body mb-3">
+                                                <div class="text-uppercase font-size-1 mb-2 text-truncate"><a
+                                                        href="/book/{{book.id}}">Kindle
+                                                        Edition</a></div>
+                                                <h2
+                                                    class="woocommerce-loop-product__title product__title mb-2 font-size-22 font-weight-regular">
+                                                    <a
+                                                        href="/book/{{book.id}}">{{book.name}}</a></h2>
+                                                <div class="font-size-2  mb-1 text-truncate">
+                                                    {% for author in book.author.all %}
+                                                        <a href="/book/{{book.id}}" class="text-gray-700">{{author.name}}</a></div>
+                                                    {% endfor %}
+                                                <div class="price d-flex align-items-center font-weight-medium">
+                                                    <ins class="text-decoration-none mr-2">
+                                                        <span class="woocommerce-Price-amount amount font-size-3 text-dark">${{book.price}}</span>
+                                                    </ins>
+                                                </div>
+                                            </div>
+                                            <div data-book={{ book.id }} data-action="add" data-qty=1 class="update-cart product__hover d-flex align-items-center">
+                                                <a href="javascript:;"
+                                                    class="text-uppercase text-dark h-dark font-weight-medium mr-3"
+                                                    tabindex="0">
+                                                    <span class="product__add-to-cart">ADD TO CART</span>
+                                                    <span class="product__add-to-cart-icon font-size-4"><i
+                                                            class="flaticon-icon-126515"></i></span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="row no-gutters products row-cols-2">
+                            {% for book in books|slice:'5:9' %}
+                            <div class="col product">
+                                <div class="product__inner overflow-hidden p-3 p-md-4">
+                                    <div
+                                        class="woocommerce-LoopProduct-link woocommerce-loop-product__link d-block position-relative">
+                                        <div class="woocommerce-loop-product__thumbnail">
+                                            <a href="/book/{{book.id}}"
+                                                class="d-block"><img src="{{book.imageURL}}"
+                                                    class="img-fluid d-block mx-auto attachment-shop_catalog size-shop_catalog wp-post-image"
+                                                    alt="image-description" height="180" width="120"></a>
+                                        </div>
+                                        <div class="woocommerce-loop-product__body product__body pt-3 bg-white">
+                                            <div class="text-uppercase font-size-1 mb-1 text-truncate"><a
+                                                    href="/book/{{book.id}}">Paperback</a>
+                                            </div>
+                                            <h2
+                                                class="woocommerce-loop-product__title product__title h6 text-lh-md mb-1 text-height-2 crop-text-2 h-dark">
+                                                <a
+                                                    href="/book/{{book.id}}">{{book.name}}</a></h2>
+                                            <div class="font-size-2  mb-1 text-truncate">
+                                                {% for author in book.author.all %}
+                                                     <a href="/book/{{book.id}}" class="text-gray-700">{{author.name}}</a>
+                                                {% endfor %}
+                                            </div>
+                                            <div class="price d-flex align-items-center font-weight-medium font-size-3">
+                                                <span class="woocommerce-Price-amount amount">${{book.price}}</span>
+                                            </div>
+                                        </div>
+                                        <div data-book={{ book.id }} data-action="add" data-qty=1 class="update-cart product__hover d-flex align-items-center">
+                                            <a href="javascript:;"
+                                                class="text-uppercase text-dark h-dark font-weight-medium mr-auto"
+                                                data-toggle="tooltip" data-placement="right"
+                                                data-original-title="ADD TO CART" tabindex="0">
+                                                <span class="product__add-to-cart">ADD TO CART</span>
+                                                <span class="product__add-to-cart-icon font-size-4"><i
+                                                        class="flaticon-icon-126515"></i></span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock content %}

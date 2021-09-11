@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+
+    <title>BookShop</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&amp;display=swap" media="all">
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'vendor/flaticon/font/flaticon.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/animate.css/animate.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/fancybox/jquery.fancybox.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/bootstrap-select/dist/css/bootstrap-select.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/slick-carousel/slick/slick.css' %}" />
+    <link rel="stylesheet" href="{% static 'vendor/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css' %}">
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="{% static 'css/theme.css' %}">
+
+    <script>
+        var user = '{{ request.user }}'
+        var csrf_token = '{{ csrf_token }}'  
+    </script>    
+</head>
+<body class="">
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'store' %}">BookShop</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'store' %}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'shop' %}">Shop</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'cart' %}">Cart</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'checkout' %}">Checkout</a>
+                    </li>
+                </ul>
+                <div class="form-inline my-2 my-lg-0">
+                    <a href="{% url 'checkout' %}"class="btn rounded-btn">Order</a>
+                    <a href="{% url 'cart' %}" class="shopping-cart">
+                        <i class="glph-icon flaticon-icon-126515"></i>
+                        <span id="cart-total" style="color: white;">0</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    {% block content %}
+
+    {% endblock content %}
+
+    <footer class="bg-dark text-center text-white" style="background-color: #f75454 !important;">
+        <!-- Grid container -->
+        <div class="container p-4 pb-0">
+            <!-- Section: Social media -->
+            <section class="mb-4">
+                <!-- Facebook -->
+                <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
+                    ><i class="fab fa-facebook-f"></i
+                ></a>
+
+                <!-- Twitter -->
+                <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
+                    ><i class="fab fa-twitter"></i
+                ></a>
+
+                <!-- Google -->
+                <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
+                    ><i class="fab fa-google"></i
+                ></a>
+
+                <!-- Instagram -->
+                <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
+                    ><i class="fab fa-instagram"></i
+                ></a>
+
+                <!-- Linkedin -->
+                <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
+                    ><i class="fab fa-linkedin-in"></i
+                ></a>
+
+                <!-- Github -->
+                <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
+                    ><i class="fab fa-github"></i
+                ></a>
+            </section>
+            <!-- Section: Social media -->
+        </div>
+        <!-- Grid container -->
+
+        <!-- Copyright -->
+        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+            © 2021 Copyright:
+            <a class="text-white" href="#">BookShop</a>
+        </div>
+        <!-- Copyright -->
+    </footer>
+
+    <script src="{% static 'vendor/jquery/dist/jquery.min.js' %}"></script>
+    <script src="{% static 'js/cart.js' %}"></script>
+    <script src="{% static 'vendor/jquery-migrate/dist/jquery-migrate.min.js' %}"></script>
+    <script src="{% static 'vendor/popper.js/dist/umd/popper.min.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap/bootstrap.min.js' %}"></script>
+    <script src="{% static 'vendor/appear.js' %}"></script>
+    <script src="{% static 'vendor/fancybox/jquery.fancybox.min.js' %}"></script>
+    <script src="{% static 'vendor/multilevel-sliding-mobile-menu/dist/jquery.zeynep.js' %}"></script>
+    <script src="{% static 'vendor/hs-megamenu/src/hs.megamenu.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap-select/dist/js/bootstrap-select.min.js' %}"></script>
+    <script src="{% static 'vendor/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js' %}"></script>
+    <script src="{% static 'vendor/slick-carousel/slick/slick.min.js' %}"></script>
+    <!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+
+    <script src="{% static 'js/hs.core.js' %}"></script>
+    <script src="{% static 'js/components/hs.unfold.js' %}"></script>
+    <script src="{% static 'js/components/hs.malihu-scrollbar.js' %}"></script>
+    <script src="{% static 'js/components/hs.fancybox.js' %}"></script>
+    <script src="{% static 'js/components/hs.slick-carousel.js' %}"></script>
+    <script src="{% static 'js/components/hs.selectpicker.js' %}"></script>
+    <script src="{% static 'js/components/hs.show-animation.js' %}"></script>
+    <script src="{% static 'js/components/hs.onscroll-animation.js' %}"></script>
+    <script src="{% static 'js/components/hs.quantity-counter.js' %}"></script>
+    <script src="{% static 'js/components/hs.scroll-nav.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+
+
+    <script>
+        $(document).on('ready', function () {
+            $.HSCore.components.HSUnfold.init($('[data-unfold-target]'));
+            $.HSCore.components.HSSelectPicker.init('.js-select');
+            $.HSCore.components.HSSlickCarousel.init('.js-slick-carousel');
+            $.HSCore.components.HSMalihuScrollBar.init($('.js-scrollbar'));
+            $.HSCore.components.HSFancyBox.init('.js-fancybox');
+            $.HSCore.components.HSQantityCounter.init('.js-quantity');
+            $.HSCore.components.HSShowAnimation.init('.js-animation-link');
+            $.HSCore.components.HSScrollNav.init($('.js-scroll-nav'), {
+            duration: 700
+            });
+            var zeynep = $('.zeynep').zeynep({
+                onClosed: function () {
+                    $("body main").attr("style", "");
+
+                    console.log('the side menu is closed.');
+                },
+                onOpened: function () {
+                    $("body main").attr("style", "pointer-events: none;");
+
+                    console.log('the side menu is opened.');
+                }
+            });
+
+            // handle zeynep overlay click
+            $(".zeynep-overlay").click(function () {
+                zeynep.close();
+            });
+
+            $(".cat-menu").click(function () {
+                if ($("html").hasClass("zeynep-opened")) {
+                    zeynep.close();
+                } else {
+                    zeynep.open();
+                }
+            });
+        });
+    </script>
+    
+</body>
+
+</html>
